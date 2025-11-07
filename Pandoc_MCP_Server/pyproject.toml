@@ -1,12 +1,12 @@
 [project]
 name = "pandoc-mcp-server"
-version = "0.2.0"
+version = "0.1.0"
 description = "A Model Context Protocol server for Pandoc with optimized CJK typography support"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Rebirthli", email = "bunny529eternal@gmail.com"}
 ]
 keywords = ["mcp", "pandoc", "document", "conversion", "markdown", "pdf", "cjk", "chinese", "japanese", "korean"]
 classifiers = [
@@ -27,9 +27,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/pandoc-mcp-server"
-Repository = "https://github.com/yourusername/pandoc-mcp-server"
-Issues = "https://github.com/yourusername/pandoc-mcp-server/issues"
+Homepage = "https://github.com/Rebirthli/MCP"
+Repository = "https://github.com/Rebirthli/MCP"
+Issues = "https://github.com/Rebirthli/MCP/issues"
 
 [project.scripts]
 pandoc-mcp = "pandoc_mcp_server.server:main"
