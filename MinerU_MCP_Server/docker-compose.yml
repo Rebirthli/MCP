@@ -5,14 +5,14 @@ services:
     build: .
     container_name: mineru-mcp-server
     ports:
-      - "8000:8000"
+      - "18888:18888"
     environment:
       - MINERU_URL=${MINERU_URL:-http://host.docker.internal:8080/parse}
     restart: unless-stopped
     networks:
       - mcp-network
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:18888/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -25,6 +25,25 @@ services:
     volumes:
       # 挂载日志目录（可选）
       - ./logs:/app/logs
+
+  nginx:
+    image: nginx:alpine
+    container_name: mineru-mcp-nginx
+    ports:
+      - "18080:18080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./logs:/var/log/nginx
+    depends_on:
+      - mineru-mcp
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:18080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   mcp-network:

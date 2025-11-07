@@ -34,17 +34,6 @@ docker-compose logs -f
 cd MinerU_MCP_Server
 pip install -e .
 ```
-
-### 生产环境部署
-
-完整的生产环境部署指南，请参考 **[DEPLOYMENT.md](../Document/DEPLOYMENT.md)**，包含：
-- ✅ Docker 部署（推荐）
-- ✅ Systemd 服务配置
-- ✅ Nginx 反向代理
-- ✅ HTTPS/SSL 配置
-- ✅ 监控和日志管理
-- ✅ 安全加固指南
-
 ## Configuration
 
 ### 1. Set up environment variables
@@ -71,7 +60,7 @@ mineru-mcp
 python -m mineru_mcp_server.server
 ```
 
-The server will start on `http://0.0.0.0:8000`
+The server will start on `http://0.0.0.0:18888`
 
 ### 3. Configure Claude Desktop (HTTP)
 
@@ -84,12 +73,14 @@ Add to your Claude Desktop configuration:
 ```json
 {
   "mcpServers": {
-    "mineru": {
-      "url": "http://localhost:8000/mcp"
+    "mineru-document-parser": {
+      "url": "http://192.168.5.15:18080/mineru-mcp"
     }
   }
 }
 ```
+
+> **注意**: 如果Claude Desktop运行在同一台服务器上，可以使用 `http://localhost:18080/mineru-mcp`
 
 ## MCP Tool
 
@@ -164,11 +155,6 @@ MinerU HTTP Service (Document parsing)
 ```
 
 ## Documentation
-
-- **[QUICKSTART.md](../Document/mineru-QUICKSTART.md)** - 🚀 5 分钟快速启动指南
-- **[DEPLOYMENT.md](../Document/DEPLOYMENT.md)** - 🏭 完整的生产环境部署指南
-- **[CONFIG_INDEX.md](../Document/CONFIG_INDEX.md)** - ⚙️ 配置文件索引和使用说明
-- **[FILES.md](../Document/FILES.md)** - 📁 部署文件详细说明
 - **[.env.example](.env.example)** - 环境变量配置模板
 
 ## License

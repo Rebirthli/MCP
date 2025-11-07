@@ -14,6 +14,8 @@ import aiohttp
 from pathlib import Path
 from urllib.parse import urlparse
 from fastmcp import FastMCP
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 # Configure logging
 logging.basicConfig(
@@ -29,6 +31,13 @@ dotenv.load_dotenv()
 MINERU_URL = os.getenv("MINERU_URL")
 if not MINERU_URL:
     raise RuntimeError("Environment variable MINERU_URL is not set")
+
+
+# Health check endpoint
+@app.custom_route("/health", methods=["GET"])
+async def health_check(request: Request) -> JSONResponse:
+    """Health check endpoint for monitoring."""
+    return JSONResponse({"status": "healthy", "service": "mineru-mcp-server"})
 
 
 async def download_file_if_url(file_source: str) -> str:
@@ -140,7 +149,7 @@ def main():
     """
     logging.info("Starting MinerU MCP Server (v0.1.0)...")
     logging.info(f"MinerU service URL: {MINERU_URL}")
-    app.run(transport="http", host="0.0.0.0", port=8000)
+    app.run(transport="http", host="0.0.0.0", port=18888)
 
 
 if __name__ == '__main__':
