@@ -11,11 +11,39 @@ A Model Context Protocol (MCP) server for document parsing using MinerU service 
 
 ## Installation
 
+### Quick Start with Docker (推荐)
+
+```bash
+# 1. 复制环境变量模板
+cp .env.example .env
+
+# 2. 编辑 .env 设置 MinerU 服务地址
+# MINERU_URL=http://your-mineru-server:8080/parse
+
+# 3. 启动服务
+docker-compose up -d
+
+# 4. 查看日志
+docker-compose logs -f
+```
+
+### 从源码安装
+
 ```bash
 # Install in development mode
 cd MinerU_MCP_Server
 pip install -e .
 ```
+
+### 生产环境部署
+
+完整的生产环境部署指南，请参考 **[DEPLOYMENT.md](../Document/DEPLOYMENT.md)**，包含：
+- ✅ Docker 部署（推荐）
+- ✅ Systemd 服务配置
+- ✅ Nginx 反向代理
+- ✅ HTTPS/SSL 配置
+- ✅ 监控和日志管理
+- ✅ 安全加固指南
 
 ## Configuration
 
@@ -134,6 +162,14 @@ MinerU MCP Server (FastMCP, HTTP transport)
     ↓
 MinerU HTTP Service (Document parsing)
 ```
+
+## Documentation
+
+- **[QUICKSTART.md](../Document/mineru-QUICKSTART.md)** - 🚀 5 分钟快速启动指南
+- **[DEPLOYMENT.md](../Document/DEPLOYMENT.md)** - 🏭 完整的生产环境部署指南
+- **[CONFIG_INDEX.md](../Document/CONFIG_INDEX.md)** - ⚙️ 配置文件索引和使用说明
+- **[FILES.md](../Document/FILES.md)** - 📁 部署文件详细说明
+- **[.env.example](.env.example)** - 环境变量配置模板
 
 ## License
 

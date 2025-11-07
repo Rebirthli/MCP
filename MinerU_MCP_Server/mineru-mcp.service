@@ -1,0 +1,41 @@
+[Unit]
+Description=MinerU MCP Server
+Documentation=https://github.com/yourusername/MinerU_MCP_Server
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=mineru-mcp
+Group=mineru-mcp
+WorkingDirectory=/opt/mineru-mcp-server
+Environment="PATH=/opt/mineru-mcp-server/venv/bin"
+EnvironmentFile=/opt/mineru-mcp-server/.env
+ExecStart=/opt/mineru-mcp-server/venv/bin/python -m mineru_mcp_server.server
+
+# 自动重启配置
+Restart=always
+RestartSec=10
+StartLimitInterval=300
+StartLimitBurst=5
+
+# 安全强化
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/mineru-mcp-server
+ReadWritePaths=/tmp
+
+# 资源限制
+MemoryLimit=2G
+MemoryHigh=1.5G
+CPUQuota=200%
+
+# 日志配置
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mineru-mcp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mineru-mcp:
+    build: .
+    container_name: mineru-mcp-server
+    ports:
+      - "8000:8000"
+    environment:
+      - MINERU_URL=${MINERU_URL:-http://host.docker.internal:8080/parse}
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      # 挂载日志目录（可选）
+      - ./logs:/app/logs
+
+networks:
+  mcp-network:
+    driver: bridge

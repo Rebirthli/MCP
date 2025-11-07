@@ -1,0 +1,47 @@
+name: 测试发布到 TestPyPI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  test-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装构建工具
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: 构建包
+        run: python -m build
+
+      - name: 检查包
+        run: twine check dist/*
+
+      - name: 发布到 TestPyPI
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: |
+          python -m twine upload --repository testpypi dist/*
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
