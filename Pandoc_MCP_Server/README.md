@@ -30,8 +30,8 @@ pip install pandoc-mcp-server
 ### 从源码安装
 
 ```bash
-git clone https://github.com/yourusername/pandoc-mcp-server
-cd pandoc-mcp-server
+git clone https://github.com/Rebirthli/MCP
+cd Pandoc-MCP-Server
 pip install -e .
 ```
 

@@ -142,14 +142,25 @@ async def parse_document(file_source: str) -> str:
 
 def main():
     """
-    Start the MinerU MCP server via HTTP transport.
+    Start the MinerU MCP server.
 
-    This function is the application entry point, responsible for
-    initializing and running the FastMCP server via HTTP.
+    Currently only HTTP transport is supported. The server can be launched
+    locally (for personal use) or remotely, and clients connect via HTTP.
     """
+    transport = os.getenv("TRANSPORT", "http").lower()
+
+    if transport != "http":
+        raise RuntimeError(
+            "Only HTTP transport is supported. Please remove TRANSPORT or set TRANSPORT=http."
+        )
+
     logging.info("Starting MinerU MCP Server (v0.1.0)...")
     logging.info(f"MinerU service URL: {MINERU_URL}")
-    app.run(transport="http", host="0.0.0.0", port=18888)
+    logging.info("Transport mode: http")
+    logging.info("Internal endpoint: http://0.0.0.0:18888/mcp")
+    logging.info("External URL (via nginx): http://<your-server-ip>:18080/mineru-mcp")
+    logging.info("Health check: http://<your-server-ip>:18080/health")
+    app.run(transport="http", host="0.0.0.0", port=18888, path="/mcp")
 
 
 if __name__ == '__main__':

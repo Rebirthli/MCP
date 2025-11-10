@@ -7,7 +7,8 @@ services:
     ports:
       - "18888:18888"
     environment:
-      - MINERU_URL=${MINERU_URL:-http://host.docker.internal:8080/parse}
+      - MINERU_URL=${MINERU_URL:-http://host.docker.internal:8080/file_parse}
+      - TRANSPORT=http
     restart: unless-stopped
     networks:
       - mcp-network

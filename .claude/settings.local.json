@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pandoc:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:gofastmcp.com)"
     ],
     "deny": [],
     "ask": []
